@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:wesee/app/screens/login/controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -13,7 +14,13 @@ class LoginScreen extends GetView<LoginController> {
       ),
       body: Center(
         child: ElevatedButton(
-          onPressed: controller.googleSignIn,
+          onPressed: () => {
+            if (kIsWeb) {
+              controller.googleSignInWeb()
+            } else {
+              controller.googleSignInNative()
+            }
+          },
           child: const Text('Google login'),
         ),
       ),

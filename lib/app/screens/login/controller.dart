@@ -1,8 +1,8 @@
-import 'package:wesee/app/routes/routes.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wesee/app/routes/routes.dart';
 
 final supabase = Supabase.instance.client;
 
@@ -22,7 +22,7 @@ class LoginController extends GetxController {
     });
   }
 
-  Future<AuthResponse> googleSignIn() async {
+  Future<AuthResponse> googleSignInNative() async {
     final webClientId = dotenv.get('GOOGLE_WEB_CLIENT_ID');
     final iosClientId = dotenv.get('GOOGLE_IOS_CLIENT_ID');
 
@@ -47,5 +47,9 @@ class LoginController extends GetxController {
       idToken: idToken,
       accessToken: accessToken,
     );
+  }
+
+  Future googleSignInWeb() async {
+    supabase.auth.signInWithOAuth(OAuthProvider.google);
   }
 }
