@@ -5,6 +5,26 @@ class SupabaseService {
 
   SupabaseService(this.client);
 
+  Stream<AuthState> get onAuthStateChange => client.auth.onAuthStateChange;
+
+  Future<AuthResponse> signInWithIdToken({
+    required OAuthProvider provider,
+    required String idToken,
+    required String accessToken,
+  }) {
+    return client.auth.signInWithIdToken(
+      provider: provider,
+      idToken: idToken,
+      accessToken: accessToken,
+    );
+  }
+
+  Future<void> signInWithOAuth(String provider) {
+    return client.auth.signInWithOAuth(OAuthProvider.values.firstWhere(
+          (p) => p.toString().split('.').last.toLowerCase() == provider.toLowerCase(),
+    ));
+  }
+
   Future<List<Map<String, dynamic>>> getFeedItems() async {
     try {
       return await client

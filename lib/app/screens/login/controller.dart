@@ -3,10 +3,11 @@ import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wesee/app/routes/routes.dart';
-
-final supabase = Supabase.instance.client;
+import 'package:wesee/app/services/supabase_service.dart';
 
 class LoginController extends GetxController {
+  final SupabaseService supabaseService = Get.find<SupabaseService>();
+
   @override
   void onInit() {
     _setupAuthListener();
@@ -14,7 +15,7 @@ class LoginController extends GetxController {
   }
 
   void _setupAuthListener() {
-    supabase.auth.onAuthStateChange.listen((data) {
+    supabaseService.onAuthStateChange.listen((data) {
       final event = data.event;
       if (event == AuthChangeEvent.signedIn) {
         Get.offAllNamed(Routes.HOME);
@@ -42,7 +43,7 @@ class LoginController extends GetxController {
       throw 'No ID Token found.';
     }
 
-    return supabase.auth.signInWithIdToken(
+    return supabaseService.signInWithIdToken(
       provider: OAuthProvider.google,
       idToken: idToken,
       accessToken: accessToken,
@@ -50,6 +51,6 @@ class LoginController extends GetxController {
   }
 
   Future googleSignInWeb() async {
-    supabase.auth.signInWithOAuth(OAuthProvider.google);
+    supabaseService.signInWithOAuth('google');
   }
 }
