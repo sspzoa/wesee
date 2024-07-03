@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wesee/app/models/models.dart';
@@ -58,5 +59,13 @@ class ListPageController extends GetxController {
     } catch (e) {
       errorMessage.value = '게시물 삭제 중 오류가 발생했습니다: $e';
     }
+  }
+
+  List<Item> getUserItems() {
+    return itemList.where((item) => currentUser.value?.id == item.authorId).toList();
+  }
+
+  int getDaysRemaining(String expirationDate) {
+    return DateTime.now().difference(DateTime.parse(expirationDate)).inDays.abs();
   }
 }

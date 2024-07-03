@@ -1,6 +1,6 @@
-import 'package:wesee/app/routes/routes.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wesee/app/routes/routes.dart';
 
 final supabase = Supabase.instance.client;
 

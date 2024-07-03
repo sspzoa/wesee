@@ -1,7 +1,7 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:camera/camera.dart';
-import 'controller.dart';
+import 'package:wesee/app/screens/capture/controller.dart';
 
 class CaptureScreen extends GetView<CaptureController> {
   const CaptureScreen({Key? key}) : super(key: key);

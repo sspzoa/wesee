@@ -1,8 +1,8 @@
-import 'package:wesee/app/core/theme/dark.dart';
-import 'package:wesee/app/core/theme/light.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wesee/app/core/theme/dark.dart';
+import 'package:wesee/app/core/theme/light.dart';
 
 import 'app/core/utils/loader.dart';
 import 'app/routes/pages.dart';
@@ -26,7 +26,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: '위시',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: WeseeLightThemeColors().primaryBrand),
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: WeseeLightThemeColors().primaryBrand,
+          brightness: Brightness.light,
+        ),
         useMaterial3: true,
         brightness: Brightness.light,
         fontFamily: 'SUITv1',
@@ -36,6 +39,10 @@ class MyApp extends StatelessWidget {
         ],
       ),
       darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: WeseeDarkThemeColors().primaryBrand,
+          brightness: Brightness.dark,
+        ),
         brightness: Brightness.dark,
         extensions: [
           WeseeDarkThemeColors(),

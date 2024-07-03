@@ -8,8 +8,6 @@ class HomePage extends GetView<HomePageController> {
 
   @override
   Widget build(BuildContext context) {
-    WeseeColors colorTheme = Theme.of(context).extension<WeseeColors>()!;
-    WeseeTypography textTheme = Theme.of(context).extension<WeseeTypography>()!;
     return LayoutBuilder(
       builder: (context, constraints) {
         return Center(
