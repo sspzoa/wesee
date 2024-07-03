@@ -3,12 +3,12 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   late PageController pageController;
-  var currentIndex = 0.obs;
+  var currentIndex = 1.obs;
 
   @override
   void onInit() {
     super.onInit();
-    pageController = PageController();
+    pageController = PageController(initialPage: 1);
   }
 
   @override
