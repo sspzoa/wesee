@@ -38,6 +38,7 @@ class TestScreen extends GetView<TestController> {
           linkToRoute('/login'),
           linkToRoute('/profile'),
           linkToRoute('/license'),
+          linkToRoute('/capture'),
         ],
       ),
     );

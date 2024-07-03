@@ -1,5 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:wesee/app/core/middleware/login.dart';
 import 'package:wesee/app/routes/routes.dart';
+import 'package:wesee/app/screens/capture/binding.dart';
+import 'package:wesee/app/screens/capture/page.dart';
 import 'package:wesee/app/screens/home/binding.dart';
 import 'package:wesee/app/screens/home/page.dart';
 import 'package:wesee/app/screens/login/binding.dart';
@@ -8,8 +12,6 @@ import 'package:wesee/app/screens/profile/binding.dart';
 import 'package:wesee/app/screens/profile/page.dart';
 import 'package:wesee/app/screens/test/binding.dart';
 import 'package:wesee/app/screens/test/page.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppPages {
   static final pages = [
@@ -21,7 +23,7 @@ class AppPages {
     GetPage(
         name: Routes.LICENSE,
         page: () => const LicensePage(),
-    ),
+        middlewares: [LoginMiddleware()]),
     GetPage(
         name: Routes.HOME,
         page: () => const HomeScreen(),
@@ -37,5 +39,10 @@ class AppPages {
         page: () => const ProfileScreen(),
         binding: ProfileBinding(),
         middlewares: [LoginMiddleware()]),
+    GetPage(
+        name: Routes.CAPTURE,
+        page: () => const CaptureScreen(),
+        binding: CaptureBinding(),
+        middlewares: [LoginMiddleware()])
   ];
 }

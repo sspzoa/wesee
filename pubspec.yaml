@@ -43,6 +43,8 @@ dependencies:
   flutter_displaymode: ^0.6.0
   url_strategy: ^0.2.0
   carousel_slider: ^4.2.1
+  camera: ^0.11.0+1
+  google_mlkit_text_recognition: ^0.13.0
 
 dev_dependencies:
   flutter_test:

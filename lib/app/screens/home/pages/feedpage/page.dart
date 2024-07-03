@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:wesee/app/core/theme/wesee_colors.dart';
 import 'package:wesee/app/core/theme/wesee_typography.dart';
-import 'package:wesee/app/screens/home/pages/feedpage/controller.dart';
 import 'package:wesee/app/models/models.dart';
+import 'package:wesee/app/screens/home/pages/feedpage/controller.dart';
 
 class FeedPage extends GetView<FeedPageController> {
   const FeedPage({super.key});
@@ -21,15 +21,13 @@ class FeedPage extends GetView<FeedPageController> {
         if (controller.errorMessage.isNotEmpty) {
           return Center(child: Text(
             controller.errorMessage.value,
-            style: textTheme.description.copyWith(color: colorTheme.primaryBrand),
           ));
         }
         return _buildFeedList(context, textTheme, colorTheme);
       }),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _showAddPostDialog(context, colorTheme, textTheme),
-        backgroundColor: colorTheme.primaryBrand,
-        child: Icon(Icons.add, color: colorTheme.grayscale100),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -37,7 +35,6 @@ class FeedPage extends GetView<FeedPageController> {
   Widget _buildFeedList(BuildContext context, WeseeTypography textTheme, WeseeColors colorTheme) {
     return RefreshIndicator(
       onRefresh: controller.fetchFeedItems,
-      color: colorTheme.primaryBrand,
       child: ListView.builder(
         itemCount: controller.feedItems.length,
         itemBuilder: (context, index) {
@@ -54,26 +51,24 @@ class FeedPage extends GetView<FeedPageController> {
       child: ListTile(
         title: Text(
           item.title,
-          style: textTheme.itemTitle.copyWith(color: colorTheme.primaryBrand),
         ),
         subtitle: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               '작성자: ${item.authorName}',
-              style: textTheme.itemDescription.copyWith(color: colorTheme.primaryBrand),
             ),
             Text(
               controller.getRelativeTime(item.createdAt),
-              style: textTheme.token.copyWith(color: colorTheme.primaryBrand),
             ),
           ],
         ),
         trailing: controller.currentUser.value?.id == item.authorId
             ? IconButton(
-          icon: Icon(Icons.delete, color: colorTheme.primaryBrand),
-          onPressed: () => _showDeleteConfirmDialog(context, item.id, textTheme, colorTheme),
-        )
+                icon: const Icon(Icons.delete),
+                onPressed: () => _showDeleteConfirmDialog(
+                    context, item.id, textTheme, colorTheme),
+              )
             : null,
         onTap: () => _showPostDetailDialog(context, item, textTheme, colorTheme),
       ),
@@ -84,19 +79,19 @@ class FeedPage extends GetView<FeedPageController> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('게시물 삭제', style: textTheme.header2.copyWith(color: colorTheme.primaryBrand)),
-        content: Text('이 게시물을 삭제하시겠습니까?', style: textTheme.paragraph1.copyWith(color: colorTheme.primaryBrand)),
+        title: const Text('게시물 삭제'),
+        content: const Text('이 게시물을 삭제하시겠습니까?'),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('취소', style: textTheme.paragraph2.copyWith(color: colorTheme.primaryBrand)),
+            child: const Text('취소'),
           ),
           TextButton(
             onPressed: () {
               controller.deleteFeedItem(itemId);
               Navigator.of(context).pop();
             },
-            child: Text('삭제', style: textTheme.paragraph2.copyWith(color: colorTheme.primaryBrand)),
+            child: const Text('삭제'),
           ),
         ],
       ),
@@ -107,23 +102,25 @@ class FeedPage extends GetView<FeedPageController> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text(item.title, style: textTheme.header1.copyWith(color: colorTheme.primaryBrand)),
+        title: Text(item.title),
         content: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(item.content, style: textTheme.paragraph1.copyWith(color: colorTheme.primaryBrand)),
+              Text(item.content),
               const SizedBox(height: 16),
-              Text('작성자: ${item.authorName}', style: textTheme.readable.copyWith(color: colorTheme.primaryBrand)),
-              Text(controller.getRelativeTime(item.createdAt), style: textTheme.token.copyWith(color: colorTheme.primaryBrand)),
+              Text(
+                '작성자: ${item.authorName}',
+              ),
+              Text(controller.getRelativeTime(item.createdAt)),
             ],
           ),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('닫기', style: textTheme.paragraph2.copyWith(color: colorTheme.primaryBrand)),
+            child: const Text('닫기'),
           ),
         ],
       ),
@@ -137,22 +134,20 @@ class FeedPage extends GetView<FeedPageController> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('새 게시물 작성', style: textTheme.header2.copyWith(color: colorTheme.primaryBrand)),
+        title: const Text('새 게시물 작성'),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
               controller: titleController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: '제목',
-                labelStyle: textTheme.readable.copyWith(color: colorTheme.primaryBrand),
               ),
             ),
             TextField(
               controller: contentController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: '내용',
-                labelStyle: textTheme.readable.copyWith(color: colorTheme.primaryBrand),
               ),
               maxLines: 3,
             ),
@@ -161,16 +156,15 @@ class FeedPage extends GetView<FeedPageController> {
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
-            child: Text('취소', style: textTheme.paragraph2.copyWith(color: colorTheme.primaryBrand)),
+            child: const Text('취소'),
           ),
           TextButton(
             onPressed: () {
               controller.addFeedItem(titleController.text, contentController.text);
               Navigator.of(context).pop();
             },
-            child: Text(
+            child: const Text(
               '게시',
-              style: textTheme.paragraph2.copyWith(color: colorTheme.primaryBrand),
             ),
           ),
         ],
