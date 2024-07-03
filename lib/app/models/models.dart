@@ -1,27 +1,24 @@
-class FeedItem {
+class Item {
   final int id;
-  final String title;
-  final String content;
+  final String name;
+  final String expirationDate;
   final String authorId;
-  final String authorName;
   final DateTime createdAt;
 
-  FeedItem({
+  Item({
     required this.id,
-    required this.title,
-    required this.content,
+    required this.name,
+    required this.expirationDate,
     required this.authorId,
-    required this.authorName,
     required this.createdAt,
   });
 
-  factory FeedItem.fromJson(Map<String, dynamic> json) {
-    return FeedItem(
+  factory Item.fromJson(Map<String, dynamic> json) {
+    return Item(
       id: json['id'],
-      title: json['title'],
-      content: json['content'],
+      name: json['name'],
+      expirationDate: json['expiration_date'],
       authorId: json['author_id'],
-      authorName: json['author_name'],
       createdAt: DateTime.parse(json['created_at']),
     );
   }

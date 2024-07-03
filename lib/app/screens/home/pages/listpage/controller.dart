@@ -3,9 +3,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wesee/app/models/models.dart';
 import 'package:wesee/app/services/supabase_service.dart';
 
-class FeedPageController extends GetxController {
+class ListPageController extends GetxController {
   final SupabaseService _supabaseService = Get.find<SupabaseService>();
-  final feedItems = <FeedItem>[].obs;
+  final itemList = <Item>[].obs;
   final isLoading = false.obs;
   final errorMessage = RxString('');
   final currentUser = Rxn<User>();
@@ -13,7 +13,7 @@ class FeedPageController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fetchFeedItems();
+    fetchItems();
     updateCurrentUser();
   }
 
@@ -38,12 +38,12 @@ class FeedPageController extends GetxController {
     }
   }
 
-  Future<void> fetchFeedItems() async {
+  Future<void> fetchItems() async {
     isLoading.value = true;
     errorMessage.value = '';
     try {
-      final items = await _supabaseService.getFeedItems();
-      feedItems.assignAll(items.map((item) => FeedItem.fromJson(item)));
+      final items = await _supabaseService.getItems();
+      itemList.assignAll(items.map((item) => Item.fromJson(item)));
     } catch (e) {
       errorMessage.value = '피드 항목을 가져오는 중 오류가 발생했습니다: $e';
     } finally {
@@ -51,19 +51,10 @@ class FeedPageController extends GetxController {
     }
   }
 
-  Future<void> addFeedItem(String title, String content) async {
+  Future<void> deleteItem(int itemId) async {
     try {
-      await _supabaseService.addFeedItem(title, content);
-      await fetchFeedItems();
-    } catch (e) {
-      errorMessage.value = '게시물 추가 중 오류가 발생했습니다: $e';
-    }
-  }
-
-  Future<void> deleteFeedItem(int itemId) async {
-    try {
-      await _supabaseService.deleteFeedItem(itemId);
-      await fetchFeedItems();
+      await _supabaseService.deleteItem(itemId);
+      await fetchItems();
     } catch (e) {
       errorMessage.value = '게시물 삭제 중 오류가 발생했습니다: $e';
     }

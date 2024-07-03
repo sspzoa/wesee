@@ -1,12 +1,12 @@
-import 'package:wesee/app/screens/home/controller.dart';
-import 'package:wesee/app/screens/home/pages/feedpage/controller.dart';
-import 'package:wesee/app/screens/home/pages/feedpage/page.dart';
-import 'package:wesee/app/screens/home/pages/homepage/controller.dart';
-import 'package:wesee/app/screens/home/pages/homepage/page.dart';
-import 'package:wesee/app/screens/home/pages/mypage/controller.dart';
-import 'package:wesee/app/screens/home/pages/mypage/page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:wesee/app/screens/home/controller.dart';
+import 'package:wesee/app/screens/home/pages/homepage/controller.dart';
+import 'package:wesee/app/screens/home/pages/homepage/page.dart';
+import 'package:wesee/app/screens/home/pages/listpage/controller.dart';
+import 'package:wesee/app/screens/home/pages/listpage/page.dart';
+import 'package:wesee/app/screens/home/pages/mypage/controller.dart';
+import 'package:wesee/app/screens/home/pages/mypage/page.dart';
 
 class HomeScreen extends GetView<HomeController> {
   const HomeScreen({super.key});
@@ -24,9 +24,9 @@ class HomeScreen extends GetView<HomeController> {
           controller.currentIndex.value = index;
         },
         children: [
-          GetBuilder<FeedPageController>(
-            init: FeedPageController(),
-            builder: (_) => const FeedPage(),
+          GetBuilder<ListPageController>(
+            init: ListPageController(),
+            builder: (_) => const ListPage(),
           ),
           GetBuilder<HomePageController>(
             init: HomePageController(),
@@ -47,7 +47,7 @@ class HomeScreen extends GetView<HomeController> {
           items: const [
             BottomNavigationBarItem(
               icon: Icon(Icons.feed),
-              label: '피드',
+              label: '리스트',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.home),

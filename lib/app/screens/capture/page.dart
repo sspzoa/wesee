@@ -10,7 +10,7 @@ class CaptureScreen extends GetView<CaptureController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Date Capture'),
+        title: const Text('Capture'),
       ),
       body: GetBuilder<CaptureController>(
         builder: (_) {
@@ -22,17 +22,6 @@ class CaptureScreen extends GetView<CaptureController> {
               Expanded(
                 child: CameraPreview(controller.cameraController),
               ),
-              ElevatedButton(
-                onPressed: controller.processImage,
-                child: const Text('Capture and Recognize Date'),
-              ),
-              Obx(() => Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  'Recognized Date: ${controller.recognizedDate.value}',
-                  style: const TextStyle(fontSize: 18),
-                ),
-              )),
             ],
           );
         },

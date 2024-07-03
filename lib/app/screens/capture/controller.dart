@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
+import 'package:wesee/app/services/supabase_service.dart';
 
 class CaptureController extends GetxController {
   late List<CameraDescription> cameras;
@@ -8,6 +12,9 @@ class CaptureController extends GetxController {
   RxBool isInitialized = false.obs;
   final textRecognizer = TextRecognizer();
   RxString recognizedDate = ''.obs;
+  Timer? _timer;
+
+  final SupabaseService supabaseService = Get.find<SupabaseService>();
 
   @override
   void onInit() {
@@ -21,6 +28,14 @@ class CaptureController extends GetxController {
     await cameraController.initialize();
     isInitialized.value = true;
     update();
+
+    _startPeriodicCheck();
+  }
+
+  void _startPeriodicCheck() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      processImage();
+    });
   }
 
   Future<void> processImage() async {
@@ -31,23 +46,96 @@ class CaptureController extends GetxController {
       final inputImage = InputImage.fromFilePath(image.path);
       final recognizedText = await textRecognizer.processImage(inputImage);
 
-      // 날짜 형식 인식
       final datePattern = RegExp(r'\d{4}\.\d{2}\.\d{2}');
       final match = datePattern.firstMatch(recognizedText.text);
 
       if (match != null) {
         recognizedDate.value = match.group(0)!;
-      } else {
-        recognizedDate.value = 'No date found';
+        _stopCamera();
+        _showDateDialog(recognizedDate.value);
       }
     } catch (e) {
       print('Error processing image: $e');
-      recognizedDate.value = '$e';
     }
+  }
+
+  void _stopCamera() {
+    _timer?.cancel();
+    cameraController.stopImageStream();
+  }
+
+  void _showDateDialog(String date) {
+    Get.dialog(
+      AlertDialog(
+        title: const Text('날짜 인식됨'),
+        content: Text('인식된 날짜: $date'),
+        actions: [
+          TextButton(
+            child: const Text('취소'),
+            onPressed: () {
+              Get.back();
+              _resumeCamera();
+            },
+          ),
+          TextButton(
+            child: const Text('계속'),
+            onPressed: () {
+              Get.back();
+              _showNameInputDialog(date);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showNameInputDialog(String date) {
+    final TextEditingController nameController = TextEditingController();
+    Get.dialog(
+      AlertDialog(
+        title: const Text('항목 이름 입력'),
+        content: TextField(
+          controller: nameController,
+          decoration: const InputDecoration(hintText: "항목 이름을 입력하세요"),
+        ),
+        actions: [
+          TextButton(
+            child: const Text('취소'),
+            onPressed: () {
+              Get.back();
+              _resumeCamera();
+            },
+          ),
+          TextButton(
+            child: const Text('추가'),
+            onPressed: () {
+              Get.back();
+              _addItemToSupabase(nameController.text, date);
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _addItemToSupabase(String name, String date) async {
+    try {
+      await supabaseService.addItem(name, date);
+      Get.back();
+    } catch (e) {
+      print('Error adding item to Supabase: $e');
+      _resumeCamera();
+    }
+  }
+
+  void _resumeCamera() {
+    _startPeriodicCheck();
+    cameraController.startImageStream((image) {});
   }
 
   @override
   void onClose() {
+    _timer?.cancel();
     cameraController.dispose();
     textRecognizer.close();
     super.onClose();
