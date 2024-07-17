@@ -17,8 +17,8 @@ class WeseeDarkThemeColors extends WeseeColors {
     grayscale800: const Color(0xFFEAEBEB),
     grayscale900: const Color(0xFFF4F5F5),
     grayscale1000: const Color(0xFFFDFEFE),
-    primaryBrand: const Color(0xFFAF272F),
-    primaryNegative: const Color(0xFFB1B3B3),
+    primaryBrand: const Color(0xFF2ED096),
+    primaryNegative: const Color(0xFFF7CE45),
   );
 }
 

@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:wesee/app/core/middleware/login.dart';
 import 'package:wesee/app/routes/routes.dart';
-import 'package:wesee/app/screens/capture/binding.dart';
-import 'package:wesee/app/screens/capture/page.dart';
+import 'package:wesee/app/screens/expiration_date/binding.dart';
+import 'package:wesee/app/screens/expiration_date/capture/binding.dart';
+import 'package:wesee/app/screens/expiration_date/capture/page.dart';
+import 'package:wesee/app/screens/expiration_date/list/binding.dart';
+import 'package:wesee/app/screens/expiration_date/list/page.dart';
+import 'package:wesee/app/screens/expiration_date/page.dart';
 import 'package:wesee/app/screens/home/binding.dart';
 import 'package:wesee/app/screens/home/page.dart';
 import 'package:wesee/app/screens/login/binding.dart';
@@ -30,9 +34,9 @@ class AppPages {
         binding: HomeBinding(),
         middlewares: [LoginMiddleware()]),
     GetPage(
-      name: Routes.LOGIN,
-      page: () => const LoginScreen(),
-      binding: LoginBinding(),
+        name: Routes.LOGIN,
+        page: () => const LoginScreen(),
+        binding: LoginBinding(),
     ),
     GetPage(
         name: Routes.PROFILE,
@@ -40,9 +44,19 @@ class AppPages {
         binding: ProfileBinding(),
         middlewares: [LoginMiddleware()]),
     GetPage(
+        name: Routes.EXPIRATION_DATE,
+        page: () => const ExpirationDateScreen(),
+        binding: ExpirationDateBinding(),
+        middlewares: [LoginMiddleware()]),
+    GetPage(
         name: Routes.CAPTURE,
         page: () => const CaptureScreen(),
         binding: CaptureBinding(),
-        middlewares: [LoginMiddleware()])
+        middlewares: [LoginMiddleware()]),
+    GetPage(
+        name: Routes.LIST,
+        page: () => const ListScreen(),
+        binding: ListBinding(),
+        middlewares: [LoginMiddleware()]),
   ];
 }

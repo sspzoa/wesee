@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wesee/app/models/models.dart';
 import 'package:wesee/app/services/supabase_service.dart';
 
-class ListPageController extends GetxController {
+class ListController extends GetxController {
   final SupabaseService _supabaseService = Get.find<SupabaseService>();
-  final itemList = <Item>[].obs;
+  final itemList = <expirationDateItem>[].obs;
   final isLoading = false.obs;
   final errorMessage = RxString('');
   final currentUser = Rxn<User>();
@@ -44,7 +43,7 @@ class ListPageController extends GetxController {
     errorMessage.value = '';
     try {
       final items = await _supabaseService.getItems();
-      itemList.assignAll(items.map((item) => Item.fromJson(item)));
+      itemList.assignAll(items.map((item) => expirationDateItem.fromJson(item)));
     } catch (e) {
       errorMessage.value = '피드 항목을 가져오는 중 오류가 발생했습니다: $e';
     } finally {
@@ -61,7 +60,7 @@ class ListPageController extends GetxController {
     }
   }
 
-  List<Item> getUserItems() {
+  List<expirationDateItem> getUserItems() {
     return itemList.where((item) => currentUser.value?.id == item.authorId).toList();
   }
 

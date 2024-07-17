@@ -1,10 +1,10 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wesee/app/screens/capture/controller.dart';
+import 'package:wesee/app/screens/expiration_date/capture/controller.dart';
 
 class CaptureScreen extends GetView<CaptureController> {
-  const CaptureScreen({Key? key}) : super(key: key);
+  const CaptureScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

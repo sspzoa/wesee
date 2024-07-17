@@ -3,10 +3,10 @@ import 'package:get/get.dart';
 import 'package:wesee/app/core/theme/wesee_colors.dart';
 import 'package:wesee/app/core/theme/wesee_typography.dart';
 import 'package:wesee/app/models/models.dart';
-import 'package:wesee/app/screens/home/pages/listpage/controller.dart';
+import 'package:wesee/app/screens/expiration_date/list/controller.dart';
 
-class ListPage extends GetView<ListPageController> {
-  const ListPage({super.key});
+class ListScreen extends GetView<ListController> {
+  const ListScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +14,9 @@ class ListPage extends GetView<ListPageController> {
     final textTheme = Theme.of(context).extension<WeseeTypography>()!;
 
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('List'),
+      ),
       body: Obx(() {
         if (controller.isLoading.value) {
           return Center(child: CircularProgressIndicator(color: colorTheme.primaryBrand));
@@ -44,7 +47,7 @@ class ListPage extends GetView<ListPageController> {
     );
   }
 
-  Widget _buildItem(BuildContext context, Item item, WeseeTypography textTheme,
+  Widget _buildItem(BuildContext context, expirationDateItem item, WeseeTypography textTheme,
       WeseeColors colorTheme) {
     final daysRemaining = controller.getDaysRemaining(item.expirationDate);
 
@@ -91,7 +94,7 @@ class ListPage extends GetView<ListPageController> {
     );
   }
 
-  void _showPostDetailDialog(BuildContext context, Item item,
+  void _showPostDetailDialog(BuildContext context, expirationDateItem item,
       WeseeTypography textTheme, WeseeColors colorTheme) {
     final daysRemaining =
         DateTime.now().difference(DateTime.parse(item.expirationDate)).inDays;

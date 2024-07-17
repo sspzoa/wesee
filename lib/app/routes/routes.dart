@@ -6,5 +6,8 @@ class Routes {
   static const LOGIN = '/login';
   static const PROFILE = '/profile';
   static const LICENSE = '/license';
-  static const CAPTURE = '/capture';
+  static const EXPIRATION_DATE = '/expiration_date';
+  static const CAPTURE = '/expiration_date/capture';
+  static const LIST = '/expiration_date/list';
+  static const SHORT_MALL = '/short_mall';
 }
