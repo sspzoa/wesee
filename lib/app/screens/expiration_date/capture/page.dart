@@ -8,6 +8,8 @@ import 'package:wesee/app/screens/expiration_date/capture/controller.dart';
 class CaptureScreen extends GetView<CaptureController> {
   const CaptureScreen({super.key});
 
+
+
   @override
   Widget build(BuildContext context) {
     final colorTheme = Theme.of(context).extension<WeseeColors>()!;

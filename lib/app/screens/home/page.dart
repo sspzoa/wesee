@@ -49,7 +49,7 @@ class HomeScreen extends GetView<HomeController> {
               title: '숏몰',
               icon: Icons.storefront,
               items: const ['햇반 (보리)', '계란 두 개', '천하장사 소시지'],
-              onTap: () => Get.toNamed(Routes.SHORT_MALL),
+              onTap: () => {},
             ),
             const SizedBox(height: 16),
             _buildCard(
@@ -78,7 +78,8 @@ class HomeScreen extends GetView<HomeController> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+        height: 240,
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
         decoration: BoxDecoration(
           color: colorTheme.grayscale100,
           border: Border.all(color: colorTheme.grayscale300),
@@ -112,6 +113,7 @@ class HomeScreen extends GetView<HomeController> {
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -125,9 +127,9 @@ class HomeScreen extends GetView<HomeController> {
                         style: textTheme.itemTitle.copyWith(color: colorTheme.grayscale600),
                       ),
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 16),
                     ...items.map((item) => Padding(
-                      padding: const EdgeInsets.only(bottom: 4),
+                      padding: const EdgeInsets.only(bottom: 8),
                       child: Text(
                         item,
                         style: textTheme.itemDescription.copyWith(color: colorTheme.grayscale900),
