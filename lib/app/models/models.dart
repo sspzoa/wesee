@@ -1,11 +1,11 @@
-class expirationDateItem {
+class ExpirationDateItem {
   final int id;
   final String name;
   final String expirationDate;
   final String authorId;
   final DateTime createdAt;
 
-  expirationDateItem({
+  ExpirationDateItem({
     required this.id,
     required this.name,
     required this.expirationDate,
@@ -13,8 +13,8 @@ class expirationDateItem {
     required this.createdAt,
   });
 
-  factory expirationDateItem.fromJson(Map<String, dynamic> json) {
-    return expirationDateItem(
+  factory ExpirationDateItem.fromJson(Map<String, dynamic> json) {
+    return ExpirationDateItem(
       id: json['id'],
       name: json['name'],
       expirationDate: json['expiration_date'],

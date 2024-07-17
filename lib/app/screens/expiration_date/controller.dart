@@ -5,7 +5,7 @@ import 'package:wesee/app/services/supabase_service.dart';
 
 class ExpirationDateController extends GetxController {
   final SupabaseService _supabaseService = Get.find<SupabaseService>();
-  final itemList = <expirationDateItem>[].obs;
+  final itemList = <ExpirationDateItem>[].obs;
   final isLoading = false.obs;
   final errorMessage = RxString('');
   final currentUser = Rxn<User>();
@@ -43,7 +43,7 @@ class ExpirationDateController extends GetxController {
     errorMessage.value = '';
     try {
       final items = await _supabaseService.getItems();
-      itemList.assignAll(items.map((item) => expirationDateItem.fromJson(item)));
+      itemList.assignAll(items.map((item) => ExpirationDateItem.fromJson(item)));
     } catch (e) {
       errorMessage.value = '피드 항목을 가져오는 중 오류가 발생했습니다: $e';
     } finally {
@@ -60,7 +60,7 @@ class ExpirationDateController extends GetxController {
     }
   }
 
-  List<expirationDateItem> getUserItems() {
+  List<ExpirationDateItem> getUserItems() {
     return itemList.where((item) => currentUser.value?.id == item.authorId).toList();
   }
 

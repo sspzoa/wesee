@@ -59,7 +59,7 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
     );
   }
 
-  Widget _buildItem(BuildContext context, expirationDateItem item,
+  Widget _buildItem(BuildContext context, ExpirationDateItem item,
       WeseeTypography textTheme, WeseeColors colorTheme) {
     final daysRemaining = controller.getDaysRemaining(item.expirationDate);
 
