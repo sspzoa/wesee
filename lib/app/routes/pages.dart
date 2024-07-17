@@ -5,8 +5,6 @@ import 'package:wesee/app/routes/routes.dart';
 import 'package:wesee/app/screens/expiration_date/binding.dart';
 import 'package:wesee/app/screens/expiration_date/capture/binding.dart';
 import 'package:wesee/app/screens/expiration_date/capture/page.dart';
-import 'package:wesee/app/screens/expiration_date/list/binding.dart';
-import 'package:wesee/app/screens/expiration_date/list/page.dart';
 import 'package:wesee/app/screens/expiration_date/page.dart';
 import 'package:wesee/app/screens/home/binding.dart';
 import 'package:wesee/app/screens/home/page.dart';
@@ -52,11 +50,6 @@ class AppPages {
         name: Routes.CAPTURE,
         page: () => const CaptureScreen(),
         binding: CaptureBinding(),
-        middlewares: [LoginMiddleware()]),
-    GetPage(
-        name: Routes.LIST,
-        page: () => const ListScreen(),
-        binding: ListBinding(),
         middlewares: [LoginMiddleware()]),
   ];
 }

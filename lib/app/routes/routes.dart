@@ -8,6 +8,5 @@ class Routes {
   static const LICENSE = '/license';
   static const EXPIRATION_DATE = '/expiration_date';
   static const CAPTURE = '/expiration_date/capture';
-  static const LIST = '/expiration_date/list';
   static const SHORT_MALL = '/short_mall';
 }
