@@ -16,7 +16,6 @@ class ExpirationDateController extends GetxController {
     super.onInit();
     fetchItems();
     updateCurrentUser();
-    Timer.periodic(Duration(hours: 1), (_) => removeExpiredItems());
   }
 
   void updateCurrentUser() {
@@ -46,20 +45,11 @@ class ExpirationDateController extends GetxController {
     try {
       final items = await _supabaseService.getItems();
       itemList.assignAll(items.map((item) => ExpirationDateItem.fromJson(item)));
-      removeExpiredItems();
     } catch (e) {
       errorMessage.value = '피드 항목을 가져오는 중 오류가 발생했습니다: $e';
     } finally {
       isLoading.value = false;
     }
-  }
-
-  void removeExpiredItems() {
-    final now = DateTime.now();
-    itemList.removeWhere((item) {
-      final expirationDate = DateTime.parse(item.expirationDate);
-      return expirationDate.isBefore(now);
-    });
   }
 
   Future<void> deleteItem(int itemId) async {
@@ -88,5 +78,18 @@ class ExpirationDateController extends GetxController {
   int getDaysRemaining(String expirationDate) {
     final difference = DateTime.parse(expirationDate).difference(DateTime.now());
     return difference.inDays;
+  }
+
+  String getDaysRemainingText(String expirationDate) {
+    final difference = DateTime.parse(expirationDate).difference(DateTime.now());
+    final daysRemaining = difference.inDays;
+
+    if (daysRemaining < 0) {
+      return 'D+${-daysRemaining}';
+    } else if (daysRemaining == 0) {
+      return 'D-DAY';
+    } else {
+      return 'D-$daysRemaining';
+    }
   }
 }

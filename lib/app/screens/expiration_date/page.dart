@@ -62,7 +62,7 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
 
   Widget _buildItem(BuildContext context, ExpirationDateItem item,
       WeseeTypography textTheme, WeseeColors colorTheme) {
-    final daysRemaining = controller.getDaysRemaining(item.expirationDate);
+    final daysRemainingText = controller.getDaysRemainingText(item.expirationDate);
 
     return GestureDetector(
       onTap: () => {},
@@ -100,7 +100,7 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
                 children: [
                   Text(item.expirationDate, style: textTheme.itemDescription),
                   const Spacer(),
-                  Text('D-$daysRemaining',
+                  Text(daysRemainingText,
                       style: textTheme.title
                           .copyWith(color: colorTheme.primaryBrand)),
                 ],
