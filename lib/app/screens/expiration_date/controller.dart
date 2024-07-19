@@ -92,4 +92,8 @@ class ExpirationDateController extends GetxController {
       return 'D-$daysRemaining';
     }
   }
+
+  void refreshItems() {
+    fetchItems();
+  }
 }

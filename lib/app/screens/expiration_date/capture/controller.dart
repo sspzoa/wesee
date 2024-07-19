@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:wesee/app/services/supabase_service.dart';
+import 'package:wesee/app/screens/expiration_date/controller.dart';
 
 class CaptureController extends GetxController {
   late List<CameraDescription> cameras;
@@ -131,6 +132,7 @@ class CaptureController extends GetxController {
     try {
       await supabaseService.addItem(name, date);
       Get.back();
+      Get.find<ExpirationDateController>().refreshItems();
     } catch (e) {
       print('Error adding item to Supabase: $e');
       _resumeCamera();
