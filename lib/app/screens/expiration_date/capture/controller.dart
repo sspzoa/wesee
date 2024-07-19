@@ -46,11 +46,20 @@ class CaptureController extends GetxController {
       final inputImage = InputImage.fromFilePath(image.path);
       final recognizedText = await textRecognizer.processImage(inputImage);
 
-      final datePattern = RegExp(r'\d{4}\.\d{2}\.\d{2}');
+      final datePattern = RegExp(r'(\d{2,4})\.(\d{2})\.(\d{2})');
       final match = datePattern.firstMatch(recognizedText.text);
 
       if (match != null) {
-        recognizedDate.value = match.group(0)!;
+        String year = match.group(1)!;
+        final month = match.group(2)!;
+        final day = match.group(3)!;
+
+        if (year.length == 2) {
+          int yearInt = int.parse(year);
+          year = (yearInt >= 50 ? '19' : '20') + year;
+        }
+
+        recognizedDate.value = '$year.$month.$day';
         _stopCamera();
         _showDateDialog(recognizedDate.value);
       }
