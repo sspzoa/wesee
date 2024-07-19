@@ -15,16 +15,16 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
     final textTheme = Theme.of(context).extension<WeseeTypography>()!;
 
     return Scaffold(
-      appBar: AppBar(
-            title: Text('소비기한',
-                style: textTheme.header1.copyWith(color: colorTheme.grayscale900)
-            ),
-      ),
+        appBar: AppBar(
+          title: Text('소비기한',
+              style: textTheme.header1.copyWith(color: colorTheme.grayscale900)
+          ),
+        ),
         body: Obx(() {
           if (controller.isLoading.value) {
             return Center(
-                child:
-                    CircularProgressIndicator(color: colorTheme.primaryBrand));
+                child: CircularProgressIndicator(color: colorTheme.primaryBrand)
+            );
           }
           if (controller.errorMessage.isNotEmpty) {
             return Center(child: Text(controller.errorMessage.value));
@@ -38,24 +38,25 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
             Icons.add,
             color: colorTheme.grayscale100,
           ),
-        ));
+        )
+    );
   }
 
   Widget _buildItemList(
       BuildContext context, WeseeTypography textTheme, WeseeColors colorTheme) {
-    final userItems = controller.getUserItems();
+    final sortedUserItems = controller.getSortedUserItems();
 
     return RefreshIndicator(
       onRefresh: controller.fetchItems,
-      child: userItems.isEmpty
+      child: sortedUserItems.isEmpty
           ? const Center(child: Text('등록된 상품이 없습니다.'))
           : ListView.builder(
-              itemCount: userItems.length,
-              itemBuilder: (context, index) {
-                final item = userItems[index];
-                return _buildItem(context, item, textTheme, colorTheme);
-              },
-            ),
+        itemCount: sortedUserItems.length,
+        itemBuilder: (context, index) {
+          final item = sortedUserItems[index];
+          return _buildItem(context, item, textTheme, colorTheme);
+        },
+      ),
     );
   }
 
