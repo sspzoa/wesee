@@ -61,18 +61,14 @@ class ExpirationDateController extends GetxController {
     }
   }
 
-  List<ExpirationDateItem> getUserItems() {
-    return itemList.where((item) => currentUser.value?.id == item.authorId).toList();
-  }
-
-  List<ExpirationDateItem> getSortedUserItems() {
-    final userItems = getUserItems();
-    userItems.sort((a, b) {
+  List<ExpirationDateItem> getSortedItems() {
+    final sortedItems = List<ExpirationDateItem>.from(itemList);
+    sortedItems.sort((a, b) {
       final daysRemainingA = getDaysRemaining(a.expirationDate);
       final daysRemainingB = getDaysRemaining(b.expirationDate);
       return daysRemainingA.compareTo(daysRemainingB);
     });
-    return userItems;
+    return sortedItems;
   }
 
   int getDaysRemaining(String expirationDate) {

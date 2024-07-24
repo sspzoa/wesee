@@ -6,7 +6,7 @@ import 'package:wesee/app/routes/routes.dart';
 import 'package:wesee/app/screens/home/controller.dart';
 
 class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,29 +39,57 @@ class HomeScreen extends GetView<HomeController> {
         ),
         toolbarHeight: 100,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildCard(
-              context,
-              title: '숏몰',
-              icon: Icons.storefront,
-              items: const ['햇반 (보리)', '계란 두 개', '천하장사 소시지'],
-              onTap: () => {},
+      body: Obx(() {
+        if (controller.isLoading.value) {
+          return Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(colorTheme.primaryBrand),
             ),
-            const SizedBox(height: 16),
-            _buildCard(
-              context,
-              title: '소비기한',
-              icon: Icons.kitchen_rounded,
-              items: const ['계란 D-90', '계란 D-90', '계란 D-90'],
-              onTap: () => Get.toNamed(Routes.EXPIRATION_DATE),
-            ),
-          ],
-        ),
-      ),
+          );
+        }
+        return RefreshIndicator(
+          onRefresh: () => controller.refreshData(),
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            itemCount: 2,
+            itemBuilder: (context, index) {
+              if (index == 0) {
+                return Padding(
+                  padding: const EdgeInsets.only(bottom: 16),
+                  child: _buildCard(
+                    context,
+                    title: '숏몰',
+                    icon: Icons.storefront,
+                    items: const ['햇반 (보리)', '계란 두 개', '천하장사 소시지'],
+                    onTap: () => Get.toNamed(Routes.SHORT_MALL),
+                  ),
+                );
+              } else {
+                return Obx(() {
+                  if (controller.isLoadingTopItems.value) {
+                    return _buildCard(
+                      context,
+                      title: '소비기한',
+                      icon: Icons.kitchen_rounded,
+                      items: null,
+                      onTap: () => Get.toNamed(Routes.EXPIRATION_DATE),
+                    );
+                  } else {
+                    return _buildCard(
+                      context,
+                      title: '소비기한',
+                      icon: Icons.kitchen_rounded,
+                      items: controller.topThreeExpirationItems,
+                      onTap: () => Get.toNamed(Routes.EXPIRATION_DATE),
+                    );
+                  }
+                });
+              }
+            },
+          ),
+        );
+      }),
     );
   }
 
@@ -69,7 +97,7 @@ class HomeScreen extends GetView<HomeController> {
       BuildContext context, {
         required String title,
         required IconData icon,
-        required List<String> items,
+        required List<String>? items,
         required VoidCallback onTap,
       }) {
     final colorTheme = Theme.of(context).extension<WeseeColors>()!;
@@ -128,13 +156,18 @@ class HomeScreen extends GetView<HomeController> {
                       ),
                     ),
                     const SizedBox(height: 16),
-                    ...items.map((item) => Padding(
-                      padding: const EdgeInsets.only(bottom: 8),
-                      child: Text(
-                        item,
-                        style: textTheme.itemDescription.copyWith(color: colorTheme.grayscale900),
-                      ),
-                    )),
+                    if (items == null)
+                      CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(colorTheme.primaryBrand),
+                      )
+                    else
+                      ...items.map((item) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          item,
+                          style: textTheme.itemDescription.copyWith(color: colorTheme.grayscale900),
+                        ),
+                      )),
                   ],
                 ),
               ),

@@ -27,9 +27,13 @@ class SupabaseService {
 
   Future<List<Map<String, dynamic>>> getItems() async {
     try {
+      final user = client.auth.currentUser;
+      if (user == null) throw Exception('User not logged in');
+
       return await client
           .from('item_list')
           .select()
+          .eq('author_id', user.id)
           .order('created_at', ascending: false);
     } catch (error) {
       print('Error fetching feed items: $error');

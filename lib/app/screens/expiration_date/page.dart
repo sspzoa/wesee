@@ -19,6 +19,7 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
           title: Text('소비기한',
               style: textTheme.header1.copyWith(color: colorTheme.grayscale900)
           ),
+          toolbarHeight: 100,
         ),
         body: Obx(() {
           if (controller.isLoading.value) {
@@ -44,16 +45,17 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
 
   Widget _buildItemList(
       BuildContext context, WeseeTypography textTheme, WeseeColors colorTheme) {
-    final sortedUserItems = controller.getSortedUserItems();
+    final sortedItems = controller.getSortedItems();
 
     return RefreshIndicator(
       onRefresh: controller.fetchItems,
-      child: sortedUserItems.isEmpty
+      child: sortedItems.isEmpty
           ? const Center(child: Text('등록된 상품이 없습니다.'))
           : ListView.builder(
-        itemCount: sortedUserItems.length,
+        physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+        itemCount: sortedItems.length,
         itemBuilder: (context, index) {
-          final item = sortedUserItems[index];
+          final item = sortedItems[index];
           return _buildItem(context, item, textTheme, colorTheme);
         },
       ),

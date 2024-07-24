@@ -12,6 +12,8 @@ import 'package:wesee/app/screens/login/binding.dart';
 import 'package:wesee/app/screens/login/page.dart';
 import 'package:wesee/app/screens/profile/binding.dart';
 import 'package:wesee/app/screens/profile/page.dart';
+import 'package:wesee/app/screens/short_mall/binding.dart';
+import 'package:wesee/app/screens/short_mall/page.dart';
 import 'package:wesee/app/screens/test/binding.dart';
 import 'package:wesee/app/screens/test/page.dart';
 
@@ -50,6 +52,11 @@ class AppPages {
         name: Routes.CAPTURE,
         page: () => const CaptureScreen(),
         binding: CaptureBinding(),
+        middlewares: [LoginMiddleware()]),
+    GetPage(
+        name: Routes.SHORT_MALL,
+        page: () => const ShortMallScreen(),
+        binding: ShortMallBinding(),
         middlewares: [LoginMiddleware()]),
   ];
 }
