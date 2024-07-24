@@ -24,7 +24,7 @@ class HomeScreen extends GetView<HomeController> {
                 style: textTheme.header1.copyWith(color: colorTheme.grayscale900),
               ),
               TextSpan(
-                text: '${controller.fullName!}',
+                text: controller.fullName!,
                 style: textTheme.header1.copyWith(
                   color: colorTheme.primaryBrand,
                   fontWeight: FontWeight.bold,
