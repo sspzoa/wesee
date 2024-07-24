@@ -160,6 +160,12 @@ class HomeScreen extends GetView<HomeController> {
                       CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation<Color>(colorTheme.primaryBrand),
                       )
+                    else if (items.isEmpty)
+                      Text(
+                        '아무것도 없네요!',
+                        style: textTheme.itemDescription.copyWith(color: colorTheme.grayscale600),
+                        textAlign: TextAlign.center,
+                      )
                     else
                       ...items.map((item) => Padding(
                         padding: const EdgeInsets.only(bottom: 8),

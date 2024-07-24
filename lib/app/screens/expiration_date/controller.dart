@@ -43,7 +43,7 @@ class ExpirationDateController extends GetxController {
     isLoading.value = true;
     errorMessage.value = '';
     try {
-      final items = await _supabaseService.getItems();
+      final items = await _supabaseService.getExpirationDateItems();
       itemList.assignAll(items.map((item) => ExpirationDateItem.fromJson(item)));
     } catch (e) {
       errorMessage.value = '피드 항목을 가져오는 중 오류가 발생했습니다: $e';
@@ -54,7 +54,7 @@ class ExpirationDateController extends GetxController {
 
   Future<void> deleteItem(int itemId) async {
     try {
-      await _supabaseService.deleteItem(itemId);
+      await _supabaseService.deleteExpirationDateItem(itemId);
       await fetchItems();
     } catch (e) {
       errorMessage.value = '게시물 삭제 중 오류가 발생했습니다: $e';

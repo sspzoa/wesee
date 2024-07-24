@@ -130,7 +130,7 @@ class CaptureController extends GetxController {
 
   Future<void> _addItemToSupabase(String name, String date) async {
     try {
-      await supabaseService.addItem(name, date);
+      await supabaseService.addExpirationDateItem(name, date);
       Get.back();
       Get.find<ExpirationDateController>().refreshItems();
     } catch (e) {

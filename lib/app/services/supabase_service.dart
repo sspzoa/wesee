@@ -25,13 +25,13 @@ class SupabaseService {
     ));
   }
 
-  Future<List<Map<String, dynamic>>> getItems() async {
+  Future<List<Map<String, dynamic>>> getExpirationDateItems() async {
     try {
       final user = client.auth.currentUser;
       if (user == null) throw Exception('User not logged in');
 
       return await client
-          .from('item_list')
+          .from('expiration_date_list')
           .select()
           .eq('author_id', user.id)
           .order('created_at', ascending: false);
@@ -41,12 +41,12 @@ class SupabaseService {
     }
   }
 
-  Future<void> addItem(String name, String expirationDate) async {
+  Future<void> addExpirationDateItem(String name, String expirationDate) async {
     try {
       final user = client.auth.currentUser;
       if (user == null) throw Exception('User not logged in');
 
-      await client.from('item_list').insert({
+      await client.from('expiration_date_list').insert({
         'name': name,
         'expiration_date': expirationDate,
         'author_id': user.id,
@@ -57,9 +57,9 @@ class SupabaseService {
     }
   }
 
-  Future<void> deleteItem(int itemId) async {
+  Future<void> deleteExpirationDateItem(int itemId) async {
     try {
-      await client.from('item_list').delete().eq('id', itemId);
+      await client.from('expiration_date_list').delete().eq('id', itemId);
     } catch (error) {
       print('Error deleting feed item: $error');
       rethrow;

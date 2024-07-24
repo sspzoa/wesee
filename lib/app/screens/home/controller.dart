@@ -32,7 +32,7 @@ class HomeController extends GetxController {
     isLoading.value = true;
     errorMessage.value = '';
     try {
-      final items = await _supabaseService.getItems();
+      final items = await _supabaseService.getExpirationDateItems();
       itemList.assignAll(items.map((item) => ExpirationDateItem.fromJson(item)));
     } catch (e) {
       errorMessage.value = '피드 항목을 가져오는 중 오류가 발생했습니다: $e';
@@ -62,13 +62,17 @@ class HomeController extends GetxController {
   Future<void> updateTopThreeExpirationItems() async {
     isLoadingTopItems.value = true;
     try {
-      final sortedItems = itemList.toList()
-        ..sort((a, b) => getDaysRemaining(a.expirationDate).compareTo(getDaysRemaining(b.expirationDate)));
+      if (itemList.isEmpty) {
+        topThreeExpirationItems.value = [];
+      } else {
+        final sortedItems = itemList.toList()
+          ..sort((a, b) => getDaysRemaining(a.expirationDate).compareTo(getDaysRemaining(b.expirationDate)));
 
-      topThreeExpirationItems.value = sortedItems.take(3).map((item) {
-        final daysText = getDaysRemainingText(item.expirationDate);
-        return '${item.name} $daysText';
-      }).toList();
+        topThreeExpirationItems.value = sortedItems.take(3).map((item) {
+          final daysText = getDaysRemainingText(item.expirationDate);
+          return '${item.name} $daysText';
+        }).toList();
+      }
     } finally {
       isLoadingTopItems.value = false;
     }
