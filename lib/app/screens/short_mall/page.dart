@@ -23,13 +23,12 @@ class ShortMallScreen extends GetView<ShortMallController> {
       body: Column(
         children: [
           SearchBar(controller: controller),
+          
         ],
       ),
     );
   }
 }
-
-
 
 class SearchBar extends StatelessWidget {
   final ShortMallController controller;

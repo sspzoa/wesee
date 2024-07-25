@@ -50,7 +50,12 @@ class ExpirationDateScreen extends GetView<ExpirationDateController> {
     return RefreshIndicator(
       onRefresh: controller.fetchItems,
       child: sortedItems.isEmpty
-          ? const Center(child: Text('등록된 상품이 없습니다.'))
+          ? Center(
+              child: Text(
+              '아무것도 없네요!',
+              style: textTheme.itemDescription
+                  .copyWith(color: colorTheme.grayscale600),
+            ))
           : ListView.builder(
         physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         itemCount: sortedItems.length,
