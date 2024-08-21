@@ -21,7 +21,8 @@ class HomeScreen extends GetView<HomeController> {
             children: [
               TextSpan(
                 text: '안녕하세요, ',
-                style: textTheme.header1.copyWith(color: colorTheme.grayscale900),
+                style:
+                    textTheme.header1.copyWith(color: colorTheme.grayscale900),
               ),
               TextSpan(
                 text: controller.fullName!,
@@ -32,7 +33,8 @@ class HomeScreen extends GetView<HomeController> {
               ),
               TextSpan(
                 text: '님',
-                style: textTheme.header1.copyWith(color: colorTheme.grayscale900),
+                style:
+                    textTheme.header1.copyWith(color: colorTheme.grayscale900),
               ),
             ],
           ),
@@ -43,28 +45,31 @@ class HomeScreen extends GetView<HomeController> {
         if (controller.isLoading.value) {
           return Center(
             child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(colorTheme.primaryBrand),
+              valueColor:
+                  AlwaysStoppedAnimation<Color>(colorTheme.primaryBrand),
             ),
           );
         }
         return RefreshIndicator(
           onRefresh: () => controller.refreshData(),
           child: ListView.builder(
-            physics: const BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             itemCount: 2,
             itemBuilder: (context, index) {
               if (index == 0) {
-                return Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: _buildCard(
-                    context,
-                    title: '숏몰',
-                    icon: Icons.storefront,
-                    items: const ['햇반 (보리)', '계란 두 개', '천하장사 소시지'],
-                    onTap: () => Get.toNamed(Routes.SHORT_MALL),
-                  ),
-                );
+                // return Padding(
+                //   padding: const EdgeInsets.only(bottom: 16),
+                //   child: _buildCard(
+                //     context,
+                //     title: '숏몰',
+                //     icon: Icons.storefront,
+                //     items: const ['햇반 (보리)', '계란 두 개', '천하장사 소시지'],
+                //     onTap: () => Get.toNamed(Routes.SHORT_MALL),
+                //   ),
+                // );
+                return Container();
               } else {
                 return Obx(() {
                   if (controller.isLoadingTopItems.value) {
@@ -94,12 +99,12 @@ class HomeScreen extends GetView<HomeController> {
   }
 
   Widget _buildCard(
-      BuildContext context, {
-        required String title,
-        required IconData icon,
-        required List<String>? items,
-        required VoidCallback onTap,
-      }) {
+    BuildContext context, {
+    required String title,
+    required IconData icon,
+    required List<String>? items,
+    required VoidCallback onTap,
+  }) {
     final colorTheme = Theme.of(context).extension<WeseeColors>()!;
     final textTheme = Theme.of(context).extension<WeseeTypography>()!;
 
@@ -122,7 +127,8 @@ class HomeScreen extends GetView<HomeController> {
                   children: [
                     Text(
                       title,
-                      style: textTheme.header1.copyWith(color: colorTheme.grayscale900),
+                      style: textTheme.header1
+                          .copyWith(color: colorTheme.grayscale900),
                     ),
                     const SizedBox(height: 12),
                     Icon(
@@ -144,7 +150,8 @@ class HomeScreen extends GetView<HomeController> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
                       decoration: BoxDecoration(
                         color: colorTheme.grayscale200,
                         border: Border.all(color: colorTheme.grayscale300),
@@ -152,28 +159,32 @@ class HomeScreen extends GetView<HomeController> {
                       ),
                       child: Text(
                         title == '숏몰' ? '도착 정보' : '내 소비기한',
-                        style: textTheme.itemTitle.copyWith(color: colorTheme.grayscale600),
+                        style: textTheme.itemTitle
+                            .copyWith(color: colorTheme.grayscale600),
                       ),
                     ),
                     const SizedBox(height: 16),
                     if (items == null)
                       CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(colorTheme.primaryBrand),
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            colorTheme.primaryBrand),
                       )
                     else if (items.isEmpty)
                       Text(
                         '아무것도 없네요!',
-                        style: textTheme.itemDescription.copyWith(color: colorTheme.grayscale600),
+                        style: textTheme.itemDescription
+                            .copyWith(color: colorTheme.grayscale600),
                         textAlign: TextAlign.center,
                       )
                     else
                       ...items.map((item) => Padding(
-                        padding: const EdgeInsets.only(bottom: 8),
-                        child: Text(
-                          item,
-                          style: textTheme.itemDescription.copyWith(color: colorTheme.grayscale900),
-                        ),
-                      )),
+                            padding: const EdgeInsets.only(bottom: 8),
+                            child: Text(
+                              item,
+                              style: textTheme.itemDescription
+                                  .copyWith(color: colorTheme.grayscale900),
+                            ),
+                          )),
                   ],
                 ),
               ),
